@@ -95,6 +95,11 @@ setupExpressMiddleware = (app) ->
   catch err
     log.warn 'Favicon not found, skipping middleware'
 
+  # Serve static files from public directory
+  app.use express.static(path.join(__dirname, 'public'))
+  # Also serve app assets
+  app.use express.static(path.join(__dirname, 'app', 'assets'))
+
   app.use require('cookie-parser')()
   app.use require('body-parser').json({limit: '25mb', strict: false, verify: (req, res, buf, encoding) ->
     if req.headers['x-hub-signature']
