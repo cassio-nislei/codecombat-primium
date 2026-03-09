@@ -91,14 +91,19 @@ setupExpressMiddleware = (app) ->
   # Skip favicon middleware if file doesn't exist to avoid crashes
   try
     faviconPath = path.join(__dirname, 'app', 'assets', 'images', 'favicon.ico')
-    app.use require('serve-favicon') faviconPath
+    app.use require('serve-favicon')(faviconPath)
   catch err
     log.warn 'Favicon not found, skipping middleware'
 
   # Serve static files from public directory
-  app.use express.static(path.join(__dirname, 'public'))
+  publicDir = path.join(__dirname, 'public')
+  if fs.existsSync(publicDir)
+    app.use express.static(publicDir)
+
   # Also serve app assets
-  app.use express.static(path.join(__dirname, 'app', 'assets'))
+  assetsDir = path.join(__dirname, 'app', 'assets')
+  if fs.existsSync(assetsDir)
+    app.use express.static(assetsDir)
 
   app.use require('cookie-parser')()
   app.use require('body-parser').json({limit: '25mb', strict: false, verify: (req, res, buf, encoding) ->
