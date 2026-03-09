@@ -88,9 +88,13 @@ setupExpressMiddleware = (app) ->
 
   setupProxyMiddleware app # TODO: Flatten setup into one function. This doesn't fit its function name.
 
-  faviconPath = path.join(__dirname, 'app', 'assets', 'images', 'favicon.ico')
-  if fs.existsSync(faviconPath)
+  # Skip favicon middleware if file doesn't exist to avoid crashes
+  try
+    faviconPath = path.join(__dirname, 'app', 'assets', 'images', 'favicon.ico')
     app.use require('serve-favicon') faviconPath
+  catch err
+    log.warn 'Favicon not found, skipping middleware'
+
   app.use require('cookie-parser')()
   app.use require('body-parser').json({limit: '25mb', strict: false, verify: (req, res, buf, encoding) ->
     if req.headers['x-hub-signature']
@@ -292,7 +296,8 @@ setupQuickBailToMainHTML = (app) ->
       if config.chinaInfra
         features.chinaInfra = true
 
-      renderMain(template, req, res)
+      # Skip static template rendering if files don't exist
+      next()
 
   app.get '/', fast('home.html')
   app.get '/home', fast('home.html')
