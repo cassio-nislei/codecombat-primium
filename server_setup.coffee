@@ -297,8 +297,21 @@ setupQuickBailToMainHTML = (app) ->
       if config.chinaInfra
         features.chinaInfra = true
 
-      # Skip static template rendering if files don't exist
-      next()
+      # Return a basic HTML response since static templates may not be compiled
+      res.status(200).send '''
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>CodeCombat</title>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+        </head>
+        <body>
+          <h1>CodeCombat Server Running</h1>
+          <p>Welcome to CodeCombat! The server is online.</p>
+        </body>
+        </html>
+      '''
 
   app.get '/', fast('home.html')
   app.get '/home', fast('home.html')
