@@ -21,8 +21,10 @@ services:
       COCO_GOOGLE_RECAPTCHA_SECRET_KEY: ${COCO_GOOGLE_RECAPTCHA_SECRET_KEY}
       COCO_PAYPAL_CLIENT_SECRET: ${COCO_PAYPAL_CLIENT_SECRET}
       COCO_SENDGRID_API_KEY: ${COCO_SENDGRID_API_KEY}
-      MONGO_URL: ${MONGO_URL:-mongodb://localhost:27017/coco}
-      REDIS_URL: ${REDIS_URL:-redis://localhost:6379}
+      COCO_MONGO_HOST: mongo
+      COCO_MONGO_PORT: 27017
+      COCO_MONGO_DATABASE_NAME: coco
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379}
     ports:
       - 7777:3000
     depends_on:
