@@ -49,25 +49,27 @@ Acessar em: **http://localhost:7777**
 
 ---
 
-## 🔑 Configurações Padrão (Teste)
+## 🔑 Configurações Necessárias
 
-O projeto usa chaves de teste por padrão. Estas são seguras para desenvolvimento:
+Para desenvolvimento completo, configure as seguintes variáveis de ambiente no arquivo `.env`:
 
-- **Stripe Test Key**: `sk_test_MFnZHYD0ixBbiBuvTlLjl2da`
-- **GitHub Client Secret**: `2555a86b83f850bc44a98c67c472adb2316a3f05`
-- **PayPal Secret**: `EEp-AscLo_-_59jMBgrPFWUaMrI_HJEY8Mf1ESD7OJ8DSIFbKtVe1btqP2SAZXR_llP_oosvJYFWEjUZ`
+- **Stripe Secret Key**: Solicitar para a equipe dev ou criar conta em https://dashboard.stripe.com
+- **GitHub Client Secret**: Criar em https://github.com/settings/developers  
+- **PayPal Secret**: Criar em https://developer.paypal.com
+
+⚠️ **Importante**: Nunca commit `.env` com segredos reais. Use `.env.example` como referência.
 
 ---
 
 ## 📍 Localização das Configurações no Código
 
 ### Backend (Node.js)
-- **Arquivo**: `server_config.coffee` (linha 69)
-- **Variável**: `process.env.COCO_STRIPE_SECRET_KEY`
+- **Arquivo**: `server_config.coffee`
+- **Variável**: `process.env.COCO_STRIPE_SECRET_KEY` (padrão: empty string, requer variável de ambiente)
 
 ### Frontend (Vue.js)
 - **Arquivo**: `app/core/services/stripe.coffee`
-- **Chave Teste**: `pk_test_zG5UwVu6Ww8YhtE9ZYh0JO6a`
+- **Chave Pública Teste**: `pk_test_zG5UwVu6Ww8YhtE9ZYh0JO6a`
 - **Chave Produção**: `pk_live_27jQZozjDGN1HSUTnSuM578g`
 
 ---

@@ -66,11 +66,11 @@ config.google =
   recaptcha_secret_key: process.env.COCO_GOOGLE_RECAPTCHA_SECRET_KEY or ''
 
 config.stripe =
-  secretKey: process.env.COCO_STRIPE_SECRET_KEY or 'sk_test_MFnZHYD0ixBbiBuvTlLjl2da'
+  secretKey: process.env.COCO_STRIPE_SECRET_KEY or ''
 
 config.paypal =
-  clientID: process.env.COCO_PAYPAL_CLIENT_ID or 'AcS4lYmr_NwK_TTWSJzOzTh01tVDceWDjB_N7df3vlvW4alTV_AF2rtmcaZDh0AmnTcOof9gKyLyHkm-'
-  clientSecret: process.env.COCO_PAYPAL_CLIENT_SECRET or 'EEp-AscLo_-_59jMBgrPFWUaMrI_HJEY8Mf1ESD7OJ8DSIFbKtVe1btqP2SAZXR_llP_oosvJYFWEjUZ'
+  clientID: process.env.COCO_PAYPAL_CLIENT_ID or ''
+  clientSecret: process.env.COCO_PAYPAL_CLIENT_SECRET or ''
 
 if config.unittest
   config.port += 1
