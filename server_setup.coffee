@@ -88,7 +88,9 @@ setupExpressMiddleware = (app) ->
 
   setupProxyMiddleware app # TODO: Flatten setup into one function. This doesn't fit its function name.
 
-  app.use require('serve-favicon') path.join(__dirname, 'public', 'images', 'favicon.ico')
+  faviconPath = path.join(__dirname, 'app', 'assets', 'images', 'favicon.ico')
+  if fs.existsSync(faviconPath)
+    app.use require('serve-favicon') faviconPath
   app.use require('cookie-parser')()
   app.use require('body-parser').json({limit: '25mb', strict: false, verify: (req, res, buf, encoding) ->
     if req.headers['x-hub-signature']
