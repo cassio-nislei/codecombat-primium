@@ -1,0 +1,50 @@
+version: '3.8'
+services:
+  proxy:
+    build:
+      context: .
+      dockerfile: ./development/docker/Dockerfile
+      args:
+        - NODE_VERSION=20
+    command: bash -c "npm install --legacy-peer-deps && npm run proxy"
+    volumes:
+      - .:/coco
+      - /coco/node_modules
+    environment:
+      DEV_CONTAINER: 1
+      NODE_ENV: ${NODE_ENV:-development}
+      COCO_STRIPE_SECRET_KEY: ${COCO_STRIPE_SECRET_KEY}
+      COCO_GITHUB_CLIENT_SECRET: ${COCO_GITHUB_CLIENT_SECRET}
+      COCO_CLOUDFLARE_API_KEY: ${COCO_CLOUDFLARE_API_KEY}
+      COCO_CLOUDFLARE_API_EMAIL: ${COCO_CLOUDFLARE_API_EMAIL}
+      COCO_CLOSEIO_API_KEY: ${COCO_CLOSEIO_API_KEY}
+      COCO_GOOGLE_RECAPTCHA_SECRET_KEY: ${COCO_GOOGLE_RECAPTCHA_SECRET_KEY}
+      COCO_PAYPAL_CLIENT_SECRET: ${COCO_PAYPAL_CLIENT_SECRET}
+      COCO_SENDGRID_API_KEY: ${COCO_SENDGRID_API_KEY}
+      MONGO_URL: ${MONGO_URL:-mongodb://localhost:27017/coco}
+      REDIS_URL: ${REDIS_URL:-redis://localhost:6379}
+    ports:
+      - 7777:3000
+    depends_on:
+      - mongo
+      - redis
+
+  mongo:
+    image: mongo:6
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_DATABASE: coco
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/data
+
+volumes:
+  mongo_data:
+  redis_data:
